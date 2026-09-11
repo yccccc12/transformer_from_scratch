@@ -1,13 +1,10 @@
 from pathlib import Path
 from tokenizer import BPETokenizer
-
-train_file = Path("data/train.txt")
-corpus_file = Path("data/corpus.txt")
-tokenizer_file = Path("data/tokenizer.json")
+from utils import TRAIN_FILE, CORPUS_FILE, TOKENIZER_FILE
 
 # Create corpus
-with open(train_file, "r", encoding="utf-8") as f:
-    with open(corpus_file, "w", encoding="utf-8") as out:
+with open(TRAIN_FILE, "r", encoding="utf-8") as f:
+    with open(CORPUS_FILE, "w", encoding="utf-8") as out:
 
         for line in f:
 
@@ -18,12 +15,12 @@ with open(train_file, "r", encoding="utf-8") as f:
 
 # Train BPE
 tokenizer = BPETokenizer(vocab_size=8000)
-tokenizer.train([str(corpus_file)])
+tokenizer.train([str(CORPUS_FILE)])
 
 # Save
-tokenizer.save(str(tokenizer_file))
+tokenizer.save(str(TOKENIZER_FILE))
 
-print("Tokenizer saved to:", tokenizer_file)
+print("Tokenizer saved to:", TOKENIZER_FILE)
 print("Vocabulary size:", tokenizer.vocab_size)
 
 print("PAD:", tokenizer.pad_id) # 0

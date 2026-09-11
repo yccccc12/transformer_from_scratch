@@ -6,14 +6,11 @@ from tokenizer import BPETokenizer
 from dataset import TranslationDataset, create_collate_fn
 from masks import create_masks
 from transformer import Transformer
+from utils import set_seed, TOKENIZER_FILE, TRAIN_FILE, MODEL_FILE
 
-import random
-import numpy as np
 
 # Random Seed to ensure reproducible
-random.seed(42)
-np.random.seed(42)
-torch.manual_seed(42)
+set_seed(seed=42)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -31,13 +28,13 @@ num_epochs = 20
 
 # Tokenizer
 tokenizer = BPETokenizer()
-tokenizer.load("data/tokenizer.json")
+tokenizer.load(str(TOKENIZER_FILE))
 
 vocab_size = tokenizer.vocab_size
 print("Vocabulary size:", vocab_size)
 
 # Dataset
-dataset = TranslationDataset("data/train.txt", tokenizer, max_len)
+dataset = TranslationDataset(str(TRAIN_FILE), tokenizer, max_len)
 print("Dataset size:", len(dataset))
 
 # DataLoader
@@ -116,6 +113,6 @@ for epoch in range(num_epochs):
 
 
 # Save model
-torch.save(model.state_dict(), "data/transformer.pt")
+torch.save(model.state_dict(), str(MODEL_FILE))
 
-print("Model saved to data/transformer.pt")
+print(f"Model saved to {MODEL_FILE}")

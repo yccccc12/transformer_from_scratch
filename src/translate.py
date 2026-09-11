@@ -2,6 +2,7 @@ import torch
 
 from tokenizer import BPETokenizer
 from transformer import Transformer
+from utils import TOKENIZER_FILE, MODEL_FILE
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -14,8 +15,7 @@ max_len = 256
 
 # Load tokenizer
 tokenizer = BPETokenizer()
-tokenizer.load("data/tokenizer.json")
-
+tokenizer.load(str(TOKENIZER_FILE))
 vocab_size = tokenizer.vocab_size
 
 # Load model
@@ -29,7 +29,7 @@ model = Transformer(
 ).to(device)
 
 model.load_state_dict(
-    torch.load("data/transformer.pt", map_location=device)
+    torch.load(str(MODEL_FILE), map_location=device)
 )
 
 model.eval()
