@@ -53,13 +53,15 @@ transformer-from-scratch/
 │   ├── transformer.py      # Encoder, decoder, and full Transformer model
 │   ├── train.py            # Training loop for Transformer model
 │   ├── translate.py        # Load checkpoint and run inference
-│   └── utils.py            # Shared path constants and seeding
+│   ├── utils.py            # Shared path constants and seeding
+│   └── transformer_from_scratch.ipynb  # Standalone notebook for running the pipeline on Colab
 ├── requirements.txt
 └── README.md
 ```
 
 ## Usage
 
+### Running Locally
 ### 1. Install dependencies
 ```bash
 pip install -r requirements.txt
@@ -91,6 +93,13 @@ python translate.py
 ```
 
 > Steps 2-5 must be run in order — each step depends on files produced by the previous one. Run all commands from the `src/` directory so the relative imports (e.g. `from utils import ...`) resolve correctly.
+
+### Running on Google Colab
+If you don't have a local GPU, you can run the full pipeline in [`src/transformer_from_scratch.ipynb`](src/transformer_from_scratch.ipynb) instead — it mirrors the same steps (prepare data -> train tokenizer -> train model -> translate) in one notebook.
+
+1. Open the notebook directly in Colab: [transformer_from_scratch.ipynb](https://colab.research.google.com/github/yccccc12/transformer_from_scratch/blob/master/src/transformer_from_scratch.ipynb).
+2. Go to **Runtime -> Change runtime type** and select **T4 GPU** as the hardware accelerator.
+3. Run the cells from top to bottom.
 
 ## References
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762) (Vaswani et al., 2017)
