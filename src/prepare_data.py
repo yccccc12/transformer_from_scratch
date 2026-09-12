@@ -1,5 +1,5 @@
 from datasets import load_dataset
-from pathlib import Path
+from utils import TRAIN_FILE
 
 dataset = load_dataset("Helsinki-NLP/opus_books", "en-fr", split="train")
 
@@ -9,14 +9,9 @@ dataset = dataset.shuffle(seed=42)
 
 dataset = dataset.select(range(20000))
 
-output_dir = Path("data")
-output_dir.mkdir(exist_ok=True)
-
-output_file = output_dir / "train.txt"
-
 count = 0
 
-with open(output_file, "w", encoding="utf-8") as f:
+with open(str(TRAIN_FILE), "w", encoding="utf-8") as f:
     for example in dataset:
         translation = example["translation"]
 
@@ -27,4 +22,4 @@ with open(output_file, "w", encoding="utf-8") as f:
         count += 1
 
 
-print(f"Saved {count} examples to {output_file}")
+print(f"Saved {count} examples to {TRAIN_FILE}")
